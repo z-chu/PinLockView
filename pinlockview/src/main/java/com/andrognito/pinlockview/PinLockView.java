@@ -69,7 +69,20 @@ public class PinLockView extends RecyclerView {
             = new PinLockAdapter.OnDeleteClickListener() {
         @Override
         public void onDeleteClicked() {
-            if (mPin.length() > 0) {
+           deleteClick();
+        }
+
+        @Override
+        public void onDeleteLongClicked() {
+            resetPinLockView();
+            if (mPinLockListener != null) {
+                mPinLockListener.onEmpty();
+            }
+        }
+    };
+    
+    public deleteClick() {
+     if (mPin.length() > 0) {
                 mPin = mPin.substring(0, mPin.length() - 1);
 
                 if (isIndicatorDotsAttached()) {
@@ -94,16 +107,7 @@ public class PinLockView extends RecyclerView {
                     mPinLockListener.onEmpty();
                 }
             }
-        }
-
-        @Override
-        public void onDeleteLongClicked() {
-            resetPinLockView();
-            if (mPinLockListener != null) {
-                mPinLockListener.onEmpty();
-            }
-        }
-    };
+    }
 
     public PinLockView(Context context) {
         super(context);
